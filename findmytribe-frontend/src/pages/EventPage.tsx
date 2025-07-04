@@ -272,6 +272,7 @@ const EventGrid = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
+  const [showPagination, setShowPagination] = useState(true);
   const totalPages = Math.ceil(total / pageSize);
 
   useEffect(() => {
@@ -279,7 +280,7 @@ const EventGrid = () => {
       .then(res => res.json())
       .then((data) => {
         if (data && Array.isArray(data.items)) {
-          setEvents(data.items.filter(e => e && e.id));
+          setEvents(data.items.filter((e: { id: any; }) => e && e.id));
           setTotal(data.total || 0);
         } else {
           setEvents([]);
@@ -294,118 +295,167 @@ const EventGrid = () => {
 
   // Magic floating pagination bar
   const Pagination = () => (
-    <div
-      style={{
-        position: 'fixed',
-        left: '50%',
-        bottom: 36,
-        transform: 'translateX(-50%)',
-        zIndex: 100,
-        background: 'linear-gradient(135deg, #e0f2fe 0%, #b6e0fe 60%, #dbeafe 100%)',
-        borderRadius: 32,
-        boxShadow: '0 8px 32px 0 #38bdf833, 0 2px 12px 0 #1e3a8a22',
-        padding: '12px 32px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        border: '2.5px solid #a5b4fc',
-        fontFamily: 'Inter, Segoe UI, Arial, sans-serif',
-        fontWeight: 600,
-        color: '#223c6a',
-        fontSize: 1.08 + 'rem',
-        backdropFilter: 'blur(8px)',
-        animation: 'floatMagic 2.5s infinite ease-in-out',
-      }}
-    >
-      <span style={{ marginRight: 10, fontSize: '1rem', color: '#2563eb', fontWeight: 700 }}>Page size:</span>
-      <select
-        value={pageSize}
-        onChange={e => { setPageSize(Number(e.target.value)); setPage(1); }}
+    showPagination ? (
+      <div
         style={{
-          borderRadius: 16,
-          border: '1.5px solid #a5b4fc',
-          padding: '4px 12px',
+          position: 'fixed',
+          left: '50%',
+          bottom: 36,
+          transform: 'translateX(-50%)',
+          zIndex: 100,
+          background: 'linear-gradient(135deg, #e0f2fe 0%, #b6e0fe 60%, #dbeafe 100%)',
+          borderRadius: 32,
+          boxShadow: '0 8px 32px 0 #38bdf833, 0 2px 12px 0 #1e3a8a22',
+          padding: '12px 32px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          border: '2.5px solid #a5b4fc',
+          fontFamily: 'Inter, Segoe UI, Arial, sans-serif',
           fontWeight: 600,
-          fontSize: '1rem',
           color: '#223c6a',
-          background: '#e0f2fe',
-          marginRight: 18,
-          outline: 'none',
-          boxShadow: '0 1px 4px #b6d0f733',
-          cursor: 'pointer',
+          fontSize: 1.08 + 'rem',
+          backdropFilter: 'blur(8px)',
+          animation: 'floatMagic 2.5s infinite ease-in-out',
         }}
       >
-        {[5, 10, 20, 40, 60, 100].map(size => (
-          <option key={size} value={size}>{size}</option>
-        ))}
-      </select>
-      <button onClick={() => setPage(1)} disabled={page === 1} style={pageBtnStyle}>&laquo; First</button>
-      <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={pageBtnStyle}>&lsaquo; Prev</button>
-      {/* Jump to page slider */}
-      <input
-        type="range"
-        min={1}
-        max={totalPages}
-        value={page}
-        onChange={e => setPage(Number(e.target.value))}
+        <button
+          onClick={() => setShowPagination(false)}
+          style={{
+            background: 'none',
+            border: 'none',
+            marginRight: 12,
+            cursor: 'pointer',
+            fontSize: 22,
+            color: '#2563eb',
+            padding: 0,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+          aria-label="Collapse pagination bar"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#2563eb" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </button>
+        <span style={{ marginRight: 10, fontSize: '1rem', color: '#2563eb', fontWeight: 700 }}>Page size:</span>
+        <select
+          value={pageSize}
+          onChange={e => { setPageSize(Number(e.target.value)); setPage(1); }}
+          style={{
+            borderRadius: 16,
+            border: '1.5px solid #a5b4fc',
+            padding: '4px 12px',
+            fontWeight: 600,
+            fontSize: '1rem',
+            color: '#223c6a',
+            background: '#e0f2fe',
+            marginRight: 18,
+            outline: 'none',
+            boxShadow: '0 1px 4px #b6d0f733',
+            cursor: 'pointer',
+          }}
+        >
+          {[5, 10, 20, 40, 60, 100].map(size => (
+            <option key={size} value={size}>{size}</option>
+          ))}
+        </select>
+        <button onClick={() => setPage(1)} disabled={page === 1} style={pageBtnStyle}>&laquo; First</button>
+        <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={pageBtnStyle}>&lsaquo; Prev</button>
+        {/* Jump to page slider */}
+        <input
+          type="range"
+          min={1}
+          max={totalPages}
+          value={page}
+          onChange={e => setPage(Number(e.target.value))}
+          style={{
+            width: 90,
+            margin: '0 10px',
+            accentColor: '#38bdf8',
+            verticalAlign: 'middle',
+          }}
+          aria-label="Jump to page"
+        />
+        <input
+          type="number"
+          min={1}
+          max={totalPages}
+          value={page}
+          onChange={e => {
+            let val = Number(e.target.value);
+            if (isNaN(val)) val = 1;
+            setPage(Math.max(1, Math.min(totalPages, val)));
+          }}
+          style={{
+            width: 48,
+            margin: '0 6px',
+            border: '1.5px solid #a5b4fc',
+            borderRadius: 8,
+            fontWeight: 600,
+            fontSize: '1rem',
+            color: '#223c6a',
+            background: '#e0f2fe',
+            outline: 'none',
+            textAlign: 'center',
+          }}
+          aria-label="Page number"
+        />
+        <span style={{ fontSize: '1rem', color: '#2563eb', fontWeight: 700 }}>/ {totalPages}</span>
+        {Array.from({ length: totalPages }, (_, i) => i + 1)
+          .filter(p => Math.abs(p - page) <= 2 || p === 1 || p === totalPages)
+          .map((p, idx, arr) =>
+            arr[idx - 1] && p - arr[idx - 1] > 1 ? (
+              <span key={p + 'dots'} style={{ padding: '0 6px', color: '#b6d0f7' }}>…</span>
+            ) : (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                style={{
+                  ...pageBtnStyle,
+                  background: p === page ? 'linear-gradient(90deg, #38bdf8 0%, #a5b4fc 100%)' : 'none',
+                  color: p === page ? '#0a1f44' : '#223c6a',
+                  border: p === page ? '2px solid #2563eb' : '2px solid transparent',
+                  fontWeight: p === page ? 700 : 600,
+                  boxShadow: p === page ? '0 2px 8px #38bdf822' : 'none',
+                }}
+              >
+                {p}
+              </button>
+            )
+          )}
+        <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={pageBtnStyle}>Next &rsaquo;</button>
+        <button onClick={() => setPage(totalPages)} disabled={page === totalPages} style={pageBtnStyle}>Last &raquo;</button>
+      </div>
+    ) : (
+      <button
+        onClick={() => setShowPagination(true)}
         style={{
-          width: 90,
-          margin: '0 10px',
-          accentColor: '#38bdf8',
-          verticalAlign: 'middle',
+          position: 'fixed',
+          left: '50%',
+          bottom: 36,
+          transform: 'translateX(-50%)',
+          zIndex: 100,
+          background: 'linear-gradient(135deg, #e0f2fe 0%, #b6e0fe 60%, #dbeafe 100%)',
+          borderRadius: 32,
+          boxShadow: '0 8px 32px 0 #38bdf833, 0 2px 12px 0 #1e3a8a22',
+          border: '2.5px solid #a5b4fc',
+          padding: '10px 22px',
+          fontFamily: 'Inter, Segoe UI, Arial, sans-serif',
+          fontWeight: 700,
+          color: '#2563eb',
+          fontSize: '1.1rem',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          backdropFilter: 'blur(8px)',
+          animation: 'floatMagic 2.5s infinite ease-in-out',
         }}
-        aria-label="Jump to page"
-      />
-      <input
-        type="number"
-        min={1}
-        max={totalPages}
-        value={page}
-        onChange={e => {
-          let val = Number(e.target.value);
-          if (isNaN(val)) val = 1;
-          setPage(Math.max(1, Math.min(totalPages, val)));
-        }}
-        style={{
-          width: 48,
-          margin: '0 6px',
-          border: '1.5px solid #a5b4fc',
-          borderRadius: 8,
-          fontWeight: 600,
-          fontSize: '1rem',
-          color: '#223c6a',
-          background: '#e0f2fe',
-          outline: 'none',
-          textAlign: 'center',
-        }}
-        aria-label="Page number"
-      />
-      <span style={{ fontSize: '1rem', color: '#2563eb', fontWeight: 700 }}>/ {totalPages}</span>
-      {Array.from({ length: totalPages }, (_, i) => i + 1)
-        .filter(p => Math.abs(p - page) <= 2 || p === 1 || p === totalPages)
-        .map((p, idx, arr) =>
-          arr[idx - 1] && p - arr[idx - 1] > 1 ? (
-            <span key={p + 'dots'} style={{ padding: '0 6px', color: '#b6d0f7' }}>…</span>
-          ) : (
-            <button
-              key={p}
-              onClick={() => setPage(p)}
-              style={{
-                ...pageBtnStyle,
-                background: p === page ? 'linear-gradient(90deg, #38bdf8 0%, #a5b4fc 100%)' : 'none',
-                color: p === page ? '#0a1f44' : '#223c6a',
-                border: p === page ? '2px solid #2563eb' : '2px solid transparent',
-                fontWeight: p === page ? 700 : 600,
-                boxShadow: p === page ? '0 2px 8px #38bdf822' : 'none',
-              }}
-            >
-              {p}
-            </button>
-          )
-        )}
-      <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={pageBtnStyle}>Next &rsaquo;</button>
-      <button onClick={() => setPage(totalPages)} disabled={page === totalPages} style={pageBtnStyle}>Last &raquo;</button>
-    </div>
+        aria-label="Expand pagination bar"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 14l-5-5-5 5" stroke="#2563eb" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        Show Pagination
+      </button>
+    )
   );
 
   const pageBtnStyle: React.CSSProperties = {
