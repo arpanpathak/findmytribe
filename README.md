@@ -75,7 +75,7 @@ Pull requests and issues are welcome! See the subproject READMEs for contributio
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) if present.
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
