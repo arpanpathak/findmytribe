@@ -65,4 +65,37 @@ MIT License. See [LICENSE](LICENSE) if present.
 
 ---
 
+## API Endpoints Overview
+
+### Events API
+- `GET /api/events` — List events (supports pagination)
+- `GET /api/events/{id}` — Get event by ID
+- `POST /api/events` — Create event
+- `PUT /api/events/{id}` — Update event
+- `DELETE /api/events/{id}` — Delete event
+
+### Tribes API
+- `GET /api/tribes` — List all tribes
+- `GET /api/tribes/{id}` — Get tribe by ID
+- `POST /api/tribes` — Create tribe (name & description required)
+- `PUT /api/tribes/{id}` — Update tribe
+- `DELETE /api/tribes/{id}` — Delete tribe
+
+### Profiles API
+- `GET /api/profiles` — List all profiles
+- `GET /api/profiles/{id}` — Get profile by ID
+- `POST /api/profiles` — Create profile
+- `PUT /api/profiles/{id}` — Update profile
+- `DELETE /api/profiles/{id}` — Delete profile
+
+### Attendances API
+- `GET /api/attendances/event/{eventId}/statistics` — Get event attendance stats
+- `POST /api/attendances/event/{eventId}` — Set attendance for a profile
+
+---
+
+> For detailed request/response formats, see the code or controller XML docs. This overview is always up-to-date with the codebase.
+
+---
+
 Enjoy building your tribe! 🌐❄️
