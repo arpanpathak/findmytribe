@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindMyTribe", "FindMyTribe.csproj", "{EAEB6125-B623-F51D-9E03-CACC46F1E53D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api.Tests", "..\api.Tests\api.Tests.csproj", "{B1B1B1B1-B1B1-B1B1-B1B1-B1B1B1B1B1B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAEB6125-B623-F51D-9E03-CACC46F1E53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEB6125-B623-F51D-9E03-CACC46F1E53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEB6125-B623-F51D-9E03-CACC46F1E53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEB6125-B623-F51D-9E03-CACC46F1E53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B1B1B1-B1B1-B1B1-B1B1-B1B1B1B1B1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B1B1B1-B1B1-B1B1-B1B1-B1B1B1B1B1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B1B1B1-B1B1-B1B1-B1B1-B1B1B1B1B1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B1B1B1-B1B1-B1B1-B1B1-B1B1B1B1B1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80CE3042-F3F9-4D82-9A08-113DD49D9428}
+	EndGlobalSection
+EndGlobal

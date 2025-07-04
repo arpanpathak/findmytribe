@@ -1,0 +1,6 @@
+@FindMyTribe_HostAddress = http://localhost:5200
+
+GET {{FindMyTribe_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
