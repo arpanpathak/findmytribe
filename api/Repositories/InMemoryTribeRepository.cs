@@ -2,8 +2,14 @@ using FindMyTribe.Api.Models;
 
 namespace FindMyTribe.Api.Repositories;
 
+/// <summary>
+/// In-memory repository for storing and managing tribes.
+/// </summary>
 public class InMemoryTribeRepository : IRepository<Tribe, string>
 {
+    /// <summary>
+    /// List of tribes.
+    /// </summary>
     private readonly List<Tribe> _tribes = new()
     {
         new Tribe {
@@ -22,13 +28,28 @@ public class InMemoryTribeRepository : IRepository<Tribe, string>
         }
     };
 
+    /// <summary>
+    /// Retrieves all tribes.
+    /// </summary>
     public IEnumerable<Tribe> GetAll() => _tribes;
+    /// <summary>
+    /// Retrieves a tribe by its unique identifier.
+    /// </summary>
     public Tribe? GetById(string id) => _tribes.FirstOrDefault(t => t.Id == id);
+    /// <summary>
+    /// Adds a new tribe.
+    /// </summary>
     public void Add(Tribe entity) => _tribes.Add(entity);
+    /// <summary>
+    /// Updates an existing tribe.
+    /// </summary>
     public void Update(Tribe entity)
     {
         var idx = _tribes.FindIndex(t => t.Id == entity.Id);
         if (idx >= 0) _tribes[idx] = entity;
     }
+    /// <summary>
+    /// Deletes a tribe by its unique identifier.
+    /// </summary>
     public void Delete(string id) => _tribes.RemoveAll(t => t.Id == id);
 }

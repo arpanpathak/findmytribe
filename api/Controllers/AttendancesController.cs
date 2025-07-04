@@ -4,18 +4,39 @@ using FindMyTribe.Api.Repositories;
 
 namespace FindMyTribe.Api.Controllers;
 
+/// <summary>
+/// Controller for managing event attendance in the Find My Tribe platform.
+/// Provides endpoints for attendance statistics and setting attendance status.
+/// </summary>
 [ApiController]
 [Route("api/attendances")]
 public class AttendancesController : ControllerBase
 {
+    /// <summary>
+    /// In-memory event repository for attendance data.
+    /// </summary>
     private readonly InMemoryEventRepository _eventRepo;
+    /// <summary>
+    /// Repository for user profiles.
+    /// </summary>
     private readonly IRepository<Profile, string> _profileRepo;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AttendancesController"/> class.
+    /// </summary>
+    /// <param name="eventRepo">The event repository.</param>
+    /// <param name="profileRepo">The profile repository.</param>
     public AttendancesController(IRepository<Event, Guid> eventRepo, IRepository<Profile, string> profileRepo)
     {
         _eventRepo = (InMemoryEventRepository)eventRepo;
         _profileRepo = profileRepo;
     }
 
+    /// <summary>
+    /// Retrieves attendance statistics for a specific event.
+    /// </summary>
+    /// <param name="eventId">The GUID of the event.</param>
+    /// <returns>Attendance statistics including gender balance.</returns>
     [HttpGet("event/{eventId}/statistics")]
     public ActionResult<object> GetStatistics(Guid eventId)
     {
@@ -35,6 +56,12 @@ public class AttendancesController : ControllerBase
         return Ok(stats);
     }
 
+    /// <summary>
+    /// Sets the attendance status for a user on a specific event.
+    /// </summary>
+    /// <param name="eventId">The GUID of the event.</param>
+    /// <param name="req">The attendance request containing profile ID and status.</param>
+    /// <returns>200 OK if successful; 404 Not Found if event does not exist.</returns>
     [HttpPost("event/{eventId}")]
     public IActionResult SetAttendance(Guid eventId, [FromBody] AttendRequest req)
     {
@@ -44,9 +71,14 @@ public class AttendancesController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Request body for setting attendance status.
+    /// </summary>
     public class AttendRequest
     {
+        /// <summary>Profile ID of the attendee.</summary>
         public string ProfileId { get; set; } = string.Empty;
+        /// <summary>Status of attendance (Attending, MightGo, NotAttending).</summary>
         public string Status { get; set; } = string.Empty; // Attending, MightGo, NotAttending
     }
 }

@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Represents an event object.
+ * @typedef {Object} Event
+ * @property {string} id - Unique event ID.
+ * @property {string} name - Event name.
+ * @property {string} description - Event description.
+ * @property {string} startTime - Event start time (ISO string).
+ * @property {string} endTime - Event end time (ISO string).
+ * @property {string} location - Event location.
+ * @property {string[]} organizerIds - Organizer profile IDs.
+ * @property {'Free'|'Paid'} type - Event type.
+ * @property {string} coverImageUrl - Cover image URL.
+ */
 export type Event = {
   id: string;
   name: string;
@@ -12,6 +25,14 @@ export type Event = {
   coverImageUrl: string;
 };
 
+/**
+ * Event attendance statistics.
+ * @typedef {Object} EventStats
+ * @property {number} Attending
+ * @property {number} MightGo
+ * @property {number} NotAttending
+ * @property {Record<string, number>} GenderBalance
+ */
 export type EventStats = {
   Attending: number;
   MightGo: number;

@@ -4,10 +4,21 @@ using FindMyTribe.Api.Models;
 
 namespace FindMyTribe.Api.Data;
 
+/// <summary>
+/// Provides seed data for events in the Find My Tribe platform.
+/// </summary>
 public static class EventSeedData
 {
+    /// <summary>
+    /// Gets a large list of seeded events for demo and testing purposes.
+    /// </summary>
     public static List<Event> Events => GenerateEvents(10000);
 
+    /// <summary>
+    /// Generates a list of random events for seeding.
+    /// </summary>
+    /// <param name="count">The number of events to generate.</param>
+    /// <returns>A list of generated events.</returns>
     private static List<Event> GenerateEvents(int count)
     {
         var events = new List<Event>(count);

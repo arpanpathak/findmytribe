@@ -1,6 +1,15 @@
 // src/pages/Tribe.tsx
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Represents a tribe (community/group).
+ * @typedef {Object} Tribe
+ * @property {string} id - Tribe ID.
+ * @property {string} name - Tribe name.
+ * @property {string} description - Tribe description.
+ * @property {string} iconUrl - Icon image URL.
+ * @property {string[]} memberProfileIds - Member profile IDs.
+ */
 export type Tribe = {
   id: string;
   name: string;
@@ -9,6 +18,10 @@ export type Tribe = {
   memberProfileIds: string[];
 };
 
+/**
+ * Tribes page component. Displays and manages tribes.
+ * @returns {JSX.Element} The rendered Tribes page.
+ */
 const TribeIcon = ({ url }: { url: string }) => (
   <img src={url} alt="Tribe Icon" style={{ width: 36, height: 36, borderRadius: 8, marginRight: 12, background: '#f3f3f3', objectFit: 'cover' }} />
 );
