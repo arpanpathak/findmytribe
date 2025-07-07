@@ -9,6 +9,7 @@ Welcome to **Find My Tribe** – a modern, open-source platform for discovering,
 > See the app in action! (More in [demo/README.md](demo/README.md))
 
 <p align="center">
+  <img src="api/Data/findmytribelogo.png" width="500px" height="200px" />
   <img src="demo/Screenshot%202025-07-04%20at%2012.51.31%E2%80%AFPM.png" alt="Event List" width="70%" style="margin: 16px; border-radius: 18px; box-shadow: 0 4px 24px #2563eb22;" />
   <img src="demo/Screenshot%202025-07-04%20at%202.50.08%E2%80%AFPM.png" alt="Event Details" width="70%" style="margin: 16px; border-radius: 18px; box-shadow: 0 4px 24px #2563eb22;" />
   <img src="demo/Screenshot%202025-07-04%20at%202.52.18%E2%80%AFPM.png" alt="Tribe Page" width="70%" style="margin: 16px; border-radius: 18px; box-shadow: 0 4px 24px #2563eb22;" />
